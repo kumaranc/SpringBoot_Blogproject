@@ -1,27 +1,23 @@
 package com.blogproject.blogs;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
+import com.blogproject.users.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 
 import com.blogproject.comments.Comment;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 public class Blog {
-
 
 	@Id
 	@GeneratedValue
@@ -34,13 +30,23 @@ public class Blog {
 	@Type(type = "text")
 	private String question;
 	
-	@Column(name = "date", nullable = false)
-	private String date;
+	@Column(name = "date", updatable = false)
+	@CreationTimestamp
+	private LocalDateTime createdDate;
+
+	@UpdateTimestamp
+	@Column(updatable = true)
+	private LocalDateTime updatedDate;
 
 	@OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
 	@JoinColumn(name = "blog_id",nullable = false)
 //	@JoinTable
 	private List<Comment> comments = new ArrayList<>();
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "user", nullable = false, referencedColumnName = "id")
+	@JsonIgnore
+	private User user;
 	
 	public int getId() {
 		return id;
@@ -56,14 +62,6 @@ public class Blog {
 
 	public void setQuestion(String question) {
 		this.question = question;
-	}
-
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
 	}
 
 	public String getBlogname() {
@@ -82,12 +80,35 @@ public class Blog {
 		this.comments = comments;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public LocalDateTime getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(LocalDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public LocalDateTime getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(LocalDateTime updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((blogname == null) ? 0 : blogname.hashCode());
-		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((question == null) ? 0 : question.hashCode());
 		return result;
@@ -107,11 +128,6 @@ public class Blog {
 				return false;
 		} else if (!blogname.equals(other.blogname))
 			return false;
-		if (date == null) {
-			if (other.date != null)
-				return false;
-		} else if (!date.equals(other.date))
-			return false;
 		if (id != other.id)
 			return false;
 		if (question == null) {
@@ -124,7 +140,7 @@ public class Blog {
 
 	@Override
 	public String toString() {
-		return "Blog [id=" + id + ", blogname=" + blogname + ", question=" + question + ", date=" + date + ", comments="
+		return "Blog [id=" + id + ", blogname=" + blogname + ", question=" + question + ", comments="
 				+ comments + "]";
 	}
 

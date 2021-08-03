@@ -1,8 +1,13 @@
 package com.blogproject.users;
 
 import com.blogproject.address.Address;
+import com.blogproject.blogs.Blog;
+import org.aspectj.apache.bcel.generic.TargetLostException;
 
 import javax.persistence.*;
+import java.lang.annotation.Target;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User {

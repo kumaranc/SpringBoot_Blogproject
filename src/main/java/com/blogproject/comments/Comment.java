@@ -5,7 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
+
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -22,9 +25,10 @@ public class Comment {
 	@Column(name = "parentcomment", nullable = true, columnDefinition="Text")
 	@Type(type = "text")
 	private String parentcomment;
-	
+
+	@CreationTimestamp
 	@Column(name = "date", nullable = false)
-	private String date;
+	private LocalDateTime date;
 
 //	@ManyToOne
 //	@JoinColumn(name = "blog_id")
@@ -38,11 +42,11 @@ public class Comment {
 		this.id = id;
 	}
 
-	public String getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 
@@ -88,7 +92,6 @@ public class Comment {
 		this.id = id;
 		this.data = data;
 		this.parentcomment = parentcomment;
-		this.date = date;
 	}
 	
 	public Comment() {

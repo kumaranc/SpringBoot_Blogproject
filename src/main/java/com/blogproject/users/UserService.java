@@ -38,6 +38,11 @@ public class UserService {
         
     }
 
+    public User getUserWithID(String id) {
+        User user = userRepository.findById(Integer.parseInt(id)).get();
+        return user;
+    }
+
     Function<UserDTO, User> mapUserDTOtoUser = (userdto) -> {
         User user = new User();
         user.setEmail(userdto.getEmail());

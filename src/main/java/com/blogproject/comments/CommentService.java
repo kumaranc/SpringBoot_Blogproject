@@ -33,7 +33,6 @@ public class CommentService {
 	Function<CommentDTO, Comment> commentDataMapping = (commentDTO) -> {
 		Comment comment = new Comment();
 		comment.setData(commentDTO.getData());
-		comment.setDate(commentDTO.getDate());
 		comment.setParentcomment(commentDTO.getParentcomment());
 		return comment;
 	};

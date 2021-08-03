@@ -12,8 +12,8 @@ public class BlogDTO {
 	private int id;
 	private String blogname;
 	private String question;
-	private String date;
 	private List<Comment> comments = new ArrayList<>();
+	private String userid;
 	
 	public int getId() {
 		return id;
@@ -34,18 +34,18 @@ public class BlogDTO {
 	public void setQuestion(String question) {
 		this.question = question;
 	}
-	public String getDate() {
-		return date;
-	}
-	public void setDate(String date) {
-		this.date = date;
-	}
 	public List<Comment> getComments() {
 		return comments;
 	}
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
-	
-	
+
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
 }

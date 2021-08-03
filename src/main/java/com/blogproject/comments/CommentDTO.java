@@ -7,7 +7,6 @@ public class CommentDTO {
 	private int id;
 	private String data;
 	private String parentcomment;
-	private String date;
 	private Blog blog;
 	
 	public int getId() {
@@ -27,12 +26,6 @@ public class CommentDTO {
 	}
 	public void setParentcomment(String parentcomment) {
 		this.parentcomment = parentcomment;
-	}
-	public String getDate() {
-		return date;
-	}
-	public void setDate(String date) {
-		this.date = date;
 	}
 	public Blog getBlog() {
 		return blog;
